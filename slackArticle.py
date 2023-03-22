@@ -1,6 +1,4 @@
 import urllib, urllib.request
-import feedparser
-import os
 import time
 import random
 import requests
@@ -26,7 +24,7 @@ template = """
     """
 
 # arXivで検索形式を指定
-def get_arXive_paper(getArticleValue):
+def get_arXiv_paper(getArticleValue):
     url = "http://export.arxiv.org/api/query"
     payload = {
         "search_query": getArticleValue,
@@ -37,9 +35,8 @@ def get_arXive_paper(getArticleValue):
     response = requests.get(url, params=payload)
     return response.content.decode("utf-8")
 
-#01 任意の時間で実行する関数
+# 任意の時間で実行する関数
 def task():
-    
     # 変数の初期化
     response = None
     root = None
@@ -57,7 +54,7 @@ def task():
     # 検索する内容指定
     else:
         search_index = search_queries[today_index]
-        response = get_arXive_paper(search_index)
+        response = get_arXiv_paper(search_index)
         root = ElementTree.fromstring(response)
         entries = root.findall("{http://www.w3.org/2005/Atom}entry")
     
